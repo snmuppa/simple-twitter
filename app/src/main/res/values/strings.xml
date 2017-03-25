@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Twister Twit</string>
+    <string name="login_twitter">Log in with Twitter</string>
+</resources>
