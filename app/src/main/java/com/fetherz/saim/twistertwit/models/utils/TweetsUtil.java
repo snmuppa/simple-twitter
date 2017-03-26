@@ -66,6 +66,7 @@ public class TweetsUtil {
                     .setFavouriteCount(serviceTweet.getFavouriteCount())
                     .setFavorited(serviceTweet.getFavorited())
                     .setReTweeted(serviceTweet.getReTweeted())
+                    .setRetweetUser(transposeServiceUserToClientUser(serviceTweet.getRetweetUser()))
                     .setUser(transposeServiceUserToClientUser(serviceTweet.getUser()))
                     .setHasRetweetStatus(serviceTweet.getHasRetweetStatus())
                     .setMediaType(serviceTweet.getMediaType())

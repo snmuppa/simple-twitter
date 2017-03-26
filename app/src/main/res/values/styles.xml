@@ -8,4 +8,13 @@
         <item name="colorAccent">@color/colorPrimaryAccent</item>
     </style>
 
+    <style name="Toolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:drawableLeft">@drawable/ic_twitter_white</item>
+    </style>
+
+    <style name="ToolbarPopUp" parent ="ThemeOverlay.AppCompat.Light">
+        <item name="android:background">@color/colorPrimaryLight</item>
+    </style>
+
 </resources>

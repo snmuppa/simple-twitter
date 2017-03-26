@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Twister Twit</string>
     <string name="login_twitter">Log in with Twitter</string>
+    <string name="compose">Compose</string>
+    <string name="droid_user">Droid User</string>
+    <string name="sample_tweet_text">Tweets can ony be 140 characters long...</string>
+    <string name="twitter_user">\@droidgeddon</string>
 </resources>
