@@ -1,4 +1,4 @@
-package com.fetherz.saim.twistertwit.models;
+package com.fetherz.saim.twistertwit.models.service.twitter;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -28,53 +28,26 @@ public class Media {
     @SerializedName(VIDEO_INFO)
     VideoInfo videoInfo;
 
-    public static String getMediaId() {
-        return MEDIA_ID;
+    public long getMediaId() {
+        return mediaId;
     }
 
-    public void setMediaId(long mediaId) {
-        this.mediaId = mediaId;
-    }
-
-    public static String getMediaIdString() {
-        return MEDIA_ID_STRING;
-    }
-
-    public void setMediaIdString(String mediaIdString) {
-        this.mediaIdString = mediaIdString;
+    public String getMediaIdString() {
+        return mediaIdString;
     }
 
     public String getType() {
         return type;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public String getMediaURl() {
         return mediaURl;
     }
 
-    public void setMediaURl(String mediaURl) {
-        this.mediaURl = mediaURl;
+    public VideoInfo getVideoInfo() {
+        return videoInfo;
     }
 
-    public static String getTYPE() {
-        return TYPE;
-    }
-
-    public static String getMediaUrl() {
-        return MEDIA_URL;
-    }
-
-    public static String getVideoInfo() {
-        return VIDEO_INFO;
-    }
-
-    public void setVideoInfo(VideoInfo videoInfo) {
-        this.videoInfo = videoInfo;
-    }
 
     @Override
     public String toString() {

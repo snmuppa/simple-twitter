@@ -1,4 +1,4 @@
-package com.fetherz.saim.twistertwit.models;
+package com.fetherz.saim.twistertwit.models.service.twitter;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -26,32 +26,12 @@ public class VideoInfo {
         return ASPECT_RATIO;
     }
 
-    public void setAspectRatio(List<Integer> aspectRatio) {
-        this.aspectRatio = aspectRatio;
-    }
-
     public int getDurationMillis() {
         return durationMillis;
     }
 
-    public void setDurationMillis(int durationMillis) {
-        this.durationMillis = durationMillis;
-    }
-
     public List<Variant> getVariants() {
         return variants;
-    }
-
-    public void setVariants(List<Variant> variants) {
-        this.variants = variants;
-    }
-
-    public static String getVARIANTS() {
-        return VARIANTS;
-    }
-
-    public static String getDURATION() {
-        return DURATION;
     }
 
     @Override

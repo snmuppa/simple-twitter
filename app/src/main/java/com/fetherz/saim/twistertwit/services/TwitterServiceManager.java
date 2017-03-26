@@ -14,7 +14,7 @@ import java.io.IOException;
 public class TwitterServiceManager {
 
 
-    private static final String TAG = TwitterServiceManager.class.getName();
+    private static final String TAG = "TwitterServiceManager";
 
     private static final String NO_INTERNET_TEXT = "No internet.";
 

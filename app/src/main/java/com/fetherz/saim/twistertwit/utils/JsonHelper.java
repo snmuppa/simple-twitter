@@ -11,6 +11,7 @@ import com.google.gson.GsonBuilder;
  */
 
 public class JsonHelper {
+    @SuppressWarnings("unchecked")
     public static <T> T GetResponseObject(String responseString, Class<T> responseClass) {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.setExclusionStrategies(new ExclusionStrategy[]{new DBFlowExclusionStrategy()});

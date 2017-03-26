@@ -1,4 +1,4 @@
-package com.fetherz.saim.twistertwit.models;
+package com.fetherz.saim.twistertwit.models.service.twitter;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -20,36 +20,16 @@ class Variant {
     @SerializedName(URL)
     public String url;
 
-    public static String getBITRATE() {
-        return BITRATE;
-    }
-
-    public static String getContentType() {
-        return CONTENT_TYPE;
-    }
-
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public static String getURL() {
-        return URL;
-    }
-
     public int getBitrate() {
         return bitrate;
     }
 
-    public void setBitrate(int bitrate) {
-        this.bitrate = bitrate;
+    public String getContentType() {
+        return contentType;
+    }
+
+    public String getUrl() {
+        return url;
     }
 
     @Override

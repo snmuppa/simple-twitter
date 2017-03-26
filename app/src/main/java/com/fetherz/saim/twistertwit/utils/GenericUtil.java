@@ -12,7 +12,7 @@ import java.util.Locale;
 
 public class GenericUtil {
 
-    private static final String TAG = GenericUtil.class.getName();
+    private static final String TAG = "GenericUtil";
 
     // getRelativeTimeAgo("Mon Apr 01 21:16:23 +0000 2014");
 

@@ -12,7 +12,7 @@ import com.fetherz.saim.twistertwit.utils.LogUtil;
 
 public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 
-    static final String TAG = LoginActivity.class.getName();
+    static final String TAG = "LoginActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

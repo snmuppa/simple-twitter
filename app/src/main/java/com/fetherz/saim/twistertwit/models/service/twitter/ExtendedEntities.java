@@ -1,4 +1,4 @@
-package com.fetherz.saim.twistertwit.models;
+package com.fetherz.saim.twistertwit.models.service.twitter;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -14,16 +14,8 @@ public class ExtendedEntities {
     @SerializedName(MEDIA)
     List<Media> mediaCollection;
 
-    public static String getMEDIA() {
-        return MEDIA;
-    }
-
     public List<Media> getMediaCollection() {
         return mediaCollection;
-    }
-
-    public void setMediaCollection(List<Media> mediaCollection) {
-        this.mediaCollection = mediaCollection;
     }
 
     @Override

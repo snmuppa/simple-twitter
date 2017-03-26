@@ -1,4 +1,4 @@
-package com.fetherz.saim.twistertwit.models;
+package com.fetherz.saim.twistertwit.models.service.twitter;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -18,10 +18,6 @@ public class RetweetedStatus {
 
     public User getUser() {
         return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     @Override
