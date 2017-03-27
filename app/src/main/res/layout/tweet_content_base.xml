@@ -51,6 +51,7 @@
         android:layout_toEndOf="@id/cvProfilePicture"
         android:layout_toRightOf="@id/cvProfilePicture"
         tools:text="@string/droid_user"
+        android:ellipsize="marquee"
         android:textColor="@android:color/black"
         android:textStyle="bold" />
 
@@ -58,9 +59,8 @@
         android:id="@+id/tvScreenName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvRetweetedUserName"
-        android:layout_marginLeft="@dimen/text_margin_small"
-        android:layout_marginTop="@dimen/text_margin_small"
+        android:layout_below="@+id/tvUserName"
+        android:layout_alignLeft="@+id/tvUserName"
         android:layout_toEndOf="@id/tvUserName"
         android:layout_toRightOf="@id/tvUserName"
         tools:text="@string/twitter_user" />
@@ -69,7 +69,7 @@
         android:id="@+id/tvTweetText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvRelativeTime"
+        android:layout_below="@+id/tvScreenName"
         android:layout_marginRight="10dp"
         android:layout_toRightOf="@id/cvProfilePicture"
         android:autoLink="all"
@@ -81,8 +81,8 @@
         android:id="@+id/tvRelativeTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvUserName"
         android:layout_toLeftOf="@+id/ivBrandIcon"
+        android:layout_alignBottom="@+id/tvUserName"
         android:text="1h 2m" />
 
     <ImageView
@@ -93,7 +93,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginLeft="@dimen/fab_margin"
         android:layout_marginRight="@dimen/fab_margin"
-        android:layout_alignBottom="@+id/tvRelativeTime"
+        android:layout_alignBottom="@+id/tvUserName"
         android:src="@drawable/ic_twitter"/>
 
 </RelativeLayout>

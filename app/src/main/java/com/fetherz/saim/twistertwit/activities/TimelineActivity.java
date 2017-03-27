@@ -2,13 +2,12 @@ package com.fetherz.saim.twistertwit.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import com.fetherz.saim.twistertwit.R;
 import com.fetherz.saim.twistertwit.adapters.TimelineRecyclerViewAdapter;
@@ -27,6 +26,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
 
 public class TimelineActivity extends BaseActivity
@@ -44,10 +44,11 @@ public class TimelineActivity extends BaseActivity
     @BindView(R.id.srContainer)
     SwipeRefreshLayout mSwipeContainer;
 
+    @BindView(R.id.fabComposeTweet)
+    FloatingActionButton mFabComposeTweet;
+
     static final String TAG = "TimelineActivity";
     static final short START_PAGE = 1;
-
-    static long mCurrentPage = 1;
 
     TwitterClient mTwitterClient;
 
@@ -138,7 +139,7 @@ public class TimelineActivity extends BaseActivity
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 // Triggered only when new data needs to be appended to the list
                 // Add whatever code is needed to append new items to the bottom of the list
-                populateTimeline(page + 1); //twitter API page numbers start from 1
+                populateTimeline(page); //twitter API page numbers start from 1
             }
         };
 
@@ -151,20 +152,20 @@ public class TimelineActivity extends BaseActivity
      * @param menu
      * @return
      */
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_timeline, menu);
 
         return super.onCreateOptionsMenu(menu);
-    }
+    }*/
 
     /**
      * Sets up actions for menu items
      * @param item
      * @return
      */
-    @Override
+    /*@Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -178,6 +179,15 @@ public class TimelineActivity extends BaseActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }*/
+    
+
+    /**
+     * On float action button click show tweet composer
+     */
+    @OnClick(R.id.fabComposeTweet)
+    public void onComposeClick(){
+        showCompose();
     }
 
     /**
