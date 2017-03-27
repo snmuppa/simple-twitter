@@ -1,19 +1,26 @@
 package com.fetherz.saim.twistertwit.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fetherz.saim.twistertwit.R;
+import com.fetherz.saim.twistertwit.activities.DetailTextActivity;
 import com.fetherz.saim.twistertwit.models.client.Tweet;
 import com.fetherz.saim.twistertwit.utils.DynamicHeightImageView;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.loopj.android.http.AsyncHttpClient.LOG_TAG;
 
 /**
  * Created by sm032858 on 3/26/17.
@@ -77,6 +84,14 @@ public class TextTweetViewHolder extends RecyclerView.ViewHolder
 
     @Override
     public void onClick(View v) {
-        //TODO: Open Tweet Detail
+        int position = getLayoutPosition();
+        Tweet tweet = mTweets.get(position);
+
+        Intent intent = DetailTextActivity.newIntent(mContext);
+
+        intent.putExtra("tweet", Parcels.wrap(tweet));
+
+        mContext.startActivity(intent);
+        Log.d(LOG_TAG, "Tweet selected: " + tweet);
     }
 }

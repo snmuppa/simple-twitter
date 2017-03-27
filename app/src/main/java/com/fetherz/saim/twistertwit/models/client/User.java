@@ -6,7 +6,7 @@ import org.parceler.Parcel;
  * Created by sm032858 on 3/25/17.
  */
 
-@Parcel(analyze={Tweet.class})
+@Parcel(analyze={User.class})
 public class User {
     public static class UserBuilder {
         private long userId;

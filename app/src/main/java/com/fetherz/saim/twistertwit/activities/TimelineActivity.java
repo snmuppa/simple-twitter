@@ -1,5 +1,6 @@
 package com.fetherz.saim.twistertwit.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -21,6 +22,8 @@ import com.fetherz.saim.twistertwit.services.TwitterClient;
 import com.fetherz.saim.twistertwit.utils.LogUtil;
 import com.loopj.android.http.TextHttpResponseHandler;
 
+import org.parceler.Parcels;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +35,7 @@ import cz.msebera.android.httpclient.Header;
 public class TimelineActivity extends BaseActivity
         implements ComposeTweetFragment.ComposeTweetListener {
 
+    private static final String EXTRA_TWEET = "tweet";
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
@@ -280,5 +284,17 @@ public class TimelineActivity extends BaseActivity
         mTweets.add(0, tweet);
         mTimelineRecyclerViewAdapter.notifyItemRangeInserted(0, 1);
         mLinearLayoutManager.scrollToPosition(0);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        LogUtil.logI(TAG, "ON activity result");
+
+        if (resultCode == RESULT_OK && requestCode == 200) {
+            // Extract name value from result extras
+            Tweet tweet = Parcels.unwrap(data.getParcelableExtra(EXTRA_TWEET));
+
+            onTweetSuccess(tweet);
+        }
     }
 }

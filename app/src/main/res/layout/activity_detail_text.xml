@@ -1,34 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_marginBottom="@dimen/card_margin"
-android:layout_width="match_parent"
-android:layout_height="wrap_content">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_marginBottom="@dimen/card_margin"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context="com.fetherz.saim.twistertwit.activities.DetailTextActivity">
 
-    <include
-        android:id="@+id/tweetBase"
-        layout="@layout/tweet_content_base"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <RelativeLayout
-        android:id="@+id/rlTweetFooter"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/ablToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/text_margin_medium"
-        android:layout_marginRight="@dimen/text_margin_medium"
-        android:layout_below="@id/tweetBase">
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
+        <include layout="@layout/include_toolbar"/>
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:layout_below="@+id/ablToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/text_margin_small"
+        android:id="@+id/llTweet">
+
+        <include
+            android:id="@+id/tweetBase"
+            layout="@layout/tweet_content_base"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
         <include layout="@layout/tweet_footer"/>
-    </RelativeLayout>
+
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/text_margin_medium"
         android:layout_marginRight="@dimen/text_margin_medium"
-        android:layout_below="@id/rlTweetFooter">
+        android:layout_below="@id/llTweet">
         <EditText
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:id="@+id/mEtTweet"
             android:layout_toLeftOf="@+id/tvTweetLength"/>
         <Button
             android:id="@+id/btnTweet"

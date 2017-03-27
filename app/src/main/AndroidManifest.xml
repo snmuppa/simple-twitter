@@ -33,7 +33,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.TimelineActivity" />
-        <activity android:name=".activities.DetailTextActivity"></activity>
+        <activity android:name=".activities.DetailTextActivity" android:parentActivityName=".activities.TimelineActivity"></activity>
     </application>
 
 </manifest>
