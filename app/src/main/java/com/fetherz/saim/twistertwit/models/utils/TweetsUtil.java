@@ -3,6 +3,7 @@ package com.fetherz.saim.twistertwit.models.utils;
 import com.fetherz.saim.twistertwit.database.utils.DBFlowExclusionStrategy;
 import com.fetherz.saim.twistertwit.models.client.Tweet;
 import com.fetherz.saim.twistertwit.models.client.User;
+import com.fetherz.saim.twistertwit.utils.JsonHelper;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -32,6 +33,28 @@ public class TweetsUtil {
                 new TypeToken<List<com.fetherz.saim.twistertwit.models.service.twitter.Tweet>>(){}.getType());
 
         return transposeServiceTweetsToClientTweets(serviceTweets);
+    }
+
+    /**
+     * Deserializes json reponse into an object if type {@link com.fetherz.saim.twistertwit.models.client.Tweet}
+     * @param jsonReponseString
+     * @return An object of type {@link com.fetherz.saim.twistertwit.models.client.Tweet}
+     */
+    public static Tweet getTweetFromJson(String jsonReponseString){
+        com.fetherz.saim.twistertwit.models.service.twitter.Tweet serviceTweet = JsonHelper.GetResponseObject(jsonReponseString, com.fetherz.saim.twistertwit.models.service.twitter.Tweet.class);
+
+        return transposeServiceTweetToClientTweet(serviceTweet);
+    }
+
+    /**
+     * Deserializes json reponse into an object if type {@link com.fetherz.saim.twistertwit.models.client.User}
+     * @param jsonResponseString
+     * @return An object of type {@link com.fetherz.saim.twistertwit.models.client.User}
+     */
+    public static User getUserFromJson(String jsonResponseString){
+        com.fetherz.saim.twistertwit.models.service.twitter.User serviceUser = JsonHelper.GetResponseObject(jsonResponseString, com.fetherz.saim.twistertwit.models.service.twitter.User.class);
+
+        return transposeServiceUserToClientUser(serviceUser);
     }
 
     /**

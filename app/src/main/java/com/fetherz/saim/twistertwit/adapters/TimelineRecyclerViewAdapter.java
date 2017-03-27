@@ -10,8 +10,11 @@ import com.fetherz.saim.twistertwit.R;
 import com.fetherz.saim.twistertwit.images.ImageLoaderImpl;
 import com.fetherz.saim.twistertwit.models.client.Tweet;
 import com.fetherz.saim.twistertwit.utils.GenericUtil;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 /**
  * Created by sm032858 on 3/26/17.
@@ -151,12 +154,12 @@ public class TimelineRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
                 viewHolder.mIvFavorite.setImageResource(R.drawable.ic_heart_outline);
             }
 
-            viewHolder.mTvRetweets.setText(tweet.getFavouriteCount());
-            viewHolder.mIvRetweeted.setTag(tweet);
+            viewHolder.mTvRetweets.setText(tweet.getRetweetCount());
+            viewHolder.mIvRetweet.setTag(tweet);
             if(tweet.getReTweeted()){
-                viewHolder.mIvRetweeted.setImageResource(R.drawable.ic_retweet_green);
+                viewHolder.mIvRetweet.setImageResource(R.drawable.ic_retweet_green);
             }else {
-                viewHolder.mIvRetweeted.setImageResource(R.drawable.ic_retweet);
+                viewHolder.mIvRetweet.setImageResource(R.drawable.ic_retweet);
             }
         }
     }
@@ -184,8 +187,15 @@ public class TimelineRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
 
             viewHolder.mTvTweetText.setText(tweet.getText());
 
-            ImageLoaderImpl imageLoader = new ImageLoaderImpl();
-            imageLoader.loadImage(tweet.getUser().getProfileImageUrl(), viewHolder.mIvProfilePicture);
+            //The following is Glide library usage for image loading
+            //ImageLoaderImpl imageLoader = new ImageLoaderImpl();
+            //imageLoader.loadImage(tweet.getUser().getProfileImageUrl(), viewHolder.mIvProfilePicture);
+
+            Picasso.with(mContext).load(tweet.getUser().getProfileImageUrl())
+                    .transform(new RoundedCornersTransformation(10,10))
+                    .placeholder(R.drawable.ic_photo)
+                    .error(R.drawable.ic_photo)
+                    .into(viewHolder.mIvProfilePicture);
 
             viewHolder.mTvScreenName.setText(String.format("%s%s", "@", tweet.getUser().getScreenName()));
             viewHolder.mTvRelativeTime.setText(GenericUtil.getRelativeTimeAgo(tweet.getCreatedAt()));
@@ -200,16 +210,23 @@ public class TimelineRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
                 viewHolder.mIvFavorite.setImageResource(R.drawable.ic_heart_outline);
             }
 
-            viewHolder.mTvRetweets.setText(tweet.getFavouriteCount());
-            viewHolder.mIvRetweeted.setTag(tweet);
+            viewHolder.mTvRetweets.setText(tweet.getRetweetCount());
+            viewHolder.mIvRetweet.setTag(tweet);
             if(tweet.getReTweeted()){
-                viewHolder.mIvRetweeted.setImageResource(R.drawable.ic_retweet_green);
+                viewHolder.mIvRetweet.setImageResource(R.drawable.ic_retweet_green);
             }else {
-                viewHolder.mIvRetweeted.setImageResource(R.drawable.ic_retweet);
+                viewHolder.mIvRetweet.setImageResource(R.drawable.ic_retweet);
             }
 
-            imageLoader = new ImageLoaderImpl();
-            imageLoader.loadImage(tweet.getMediaUrl(), viewHolder.mIvTweetImage);
+            //The following is Glide library usage for image loading
+            //imageLoader = new ImageLoaderImpl();
+            //imageLoader.loadImage(tweet.getMediaUrl(), viewHolder.mIvTweetImage);
+
+            Picasso.with(mContext).load(tweet.getMediaUrl())
+                    .transform(new RoundedCornersTransformation(10,10))
+                    .placeholder(R.drawable.ic_photo)
+                    .error(R.drawable.ic_photo)
+                    .into(viewHolder.mIvTweetImage);
         }
     }
 

@@ -1,9 +1,12 @@
 package com.fetherz.saim.twistertwit.models.client;
 
+import org.parceler.Parcel;
+
 /**
  * Created by sm032858 on 3/25/17.
  */
 
+@Parcel(analyze={Tweet.class})
 public class Tweet {
 
     static final String COLUMN_CREATED_AT = "CreatedAt";
@@ -152,6 +155,8 @@ public class Tweet {
     String videoUrl;
 
     String mediaContentType;
+
+    public Tweet(){ }
 
     private Tweet(String tweetIdString, long tweetId, String createdAt, String text, String retweetCount,
                  String favouriteCount, Boolean favorited, Boolean reTweeted, User user, User retweetUser,

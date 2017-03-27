@@ -2,6 +2,7 @@ package com.fetherz.saim.twistertwit.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +14,9 @@ import com.fetherz.saim.twistertwit.R;
 import com.fetherz.saim.twistertwit.adapters.TimelineRecyclerViewAdapter;
 import com.fetherz.saim.twistertwit.application.TwitterApplication;
 import com.fetherz.saim.twistertwit.eventlisteners.EndlessRecyclerViewScrollListener;
+import com.fetherz.saim.twistertwit.fragments.ComposeTweetFragment;
 import com.fetherz.saim.twistertwit.models.client.Tweet;
+import com.fetherz.saim.twistertwit.models.client.User;
 import com.fetherz.saim.twistertwit.models.utils.TweetsUtil;
 import com.fetherz.saim.twistertwit.services.TwitterClient;
 import com.fetherz.saim.twistertwit.utils.LogUtil;
@@ -26,7 +29,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cz.msebera.android.httpclient.Header;
 
-public class TimelineActivity extends BaseActivity {
+public class TimelineActivity extends BaseActivity
+        implements ComposeTweetFragment.ComposeTweetListener {
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -50,6 +54,8 @@ public class TimelineActivity extends BaseActivity {
     List<Tweet> mTweets;
     TimelineRecyclerViewAdapter mTimelineRecyclerViewAdapter;
     EndlessRecyclerViewScrollListener mEndlessRecyclerViewScrollListener;
+    LinearLayoutManager mLinearLayoutManager;
+    User mCurrentUser;
 
     /**
      * On Create event in the android event life cycle
@@ -65,8 +71,32 @@ public class TimelineActivity extends BaseActivity {
 
         initializeViews();
 
-        //Testing the response
+        setUser();
         populateTimeline(START_PAGE);
+    }
+
+    /**
+     * Sets the current user in the local cache
+     */
+    private void setUser() {
+        mTwitterClient.getUser(new TextHttpResponseHandler(){
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                LogUtil.logE(TAG, "Http request failure with status code: " + statusCode + ". " + throwable.getMessage(), throwable);
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                LogUtil.logI(TAG, responseString);
+
+                if(responseString != null) {
+                    mCurrentUser = TweetsUtil.getUserFromJson(responseString);
+
+                    LogUtil.logD(TAG, mTweets.toString());
+                }
+            }
+        });
     }
 
     /**
@@ -94,21 +124,21 @@ public class TimelineActivity extends BaseActivity {
         // Attach the adapter to the recyclerview to populate items
         mRvArticles.setAdapter(mTimelineRecyclerViewAdapter);
 
-        LinearLayoutManager linearLayoutManager =
+        mLinearLayoutManager =
                 new LinearLayoutManager(TimelineActivity.this);
 
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
         // Set layout manager to position the items
-        mRvArticles.setLayoutManager(linearLayoutManager);
+        mRvArticles.setLayoutManager(mLinearLayoutManager);
 
         // Retain an instance so that you can call `resetState()` for fresh searches
-        mEndlessRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+        mEndlessRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(mLinearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 // Triggered only when new data needs to be appended to the list
                 // Add whatever code is needed to append new items to the bottom of the list
-                populateTimeline(page); //ny times API page numbers start from 0
+                populateTimeline(page + 1); //twitter API page numbers start from 1
             }
         };
 
@@ -154,7 +184,9 @@ public class TimelineActivity extends BaseActivity {
      * Show's the tweet compose overlay dialog fragment
      */
     private void showCompose() {
-        //TODO: show the compose overlay
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        ComposeTweetFragment composeTweetFragment = ComposeTweetFragment.newInstance(mCurrentUser);
+        composeTweetFragment.show(fragmentManager, "Tweet_Away");
     }
 
     /**
@@ -195,30 +227,30 @@ public class TimelineActivity extends BaseActivity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                LogUtil.logW(TAG, "Http request failure with status code: " + statusCode + ". " + throwable.getMessage(), throwable);
+                LogUtil.logE(TAG, "Http request failure with status code: " + statusCode + ". " + throwable.getMessage(), throwable);
             }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
                 LogUtil.logI(TAG, responseString);
 
-                 List<Tweet> tweets = TweetsUtil.getTweetsFromJson(responseString);
+                if(responseString != null) {
+                    List<Tweet> tweets = TweetsUtil.getTweetsFromJson(responseString);
 
-                if(tweets!=null)
-                {
-                    int currSize = mTimelineRecyclerViewAdapter.getItemCount();
-                    mTweets.addAll(tweets);
-                    mTimelineRecyclerViewAdapter.notifyItemRangeInserted(currSize, mTweets.size() - 1);
+                    if (tweets != null) {
+                        int currSize = mTimelineRecyclerViewAdapter.getItemCount();
+                        mTweets.addAll(tweets);
+                        mTimelineRecyclerViewAdapter.notifyItemRangeInserted(currSize, mTweets.size() - 1);
+                    }
+
+                    // Now we call setRefreshing(false) to signal refresh has finished
+                    mSwipeContainer.setRefreshing(false);
+
+                    LogUtil.logD(TAG, mTweets.toString());
                 }
-
-                // Now we call setRefreshing(false) to signal refresh has finished
-                mSwipeContainer.setRefreshing(false);
-
-                LogUtil.logD(TAG, mTweets.toString());
             }
         });
     }
-
 
     /**
      * Reset Endless Scroller
@@ -227,5 +259,16 @@ public class TimelineActivity extends BaseActivity {
         mTimelineRecyclerViewAdapter.clear();
         // 3. Reset endless scroll listener when performing a new search
         mEndlessRecyclerViewScrollListener.resetState();
+    }
+
+    /**
+     * On tweet success add the tweet to the 0th location and notify adapter and scroll into view
+     * @param tweet
+     */
+    @Override
+    public void onTweetSuccess(Tweet tweet) {
+        mTweets.add(0, tweet);
+        mTimelineRecyclerViewAdapter.notifyItemRangeInserted(0, 1);
+        mLinearLayoutManager.scrollToPosition(0);
     }
 }

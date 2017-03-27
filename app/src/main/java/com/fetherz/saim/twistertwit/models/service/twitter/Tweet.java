@@ -3,7 +3,6 @@ package com.fetherz.saim.twistertwit.models.service.twitter;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Created by sm032858 on 3/21/17.
@@ -135,9 +134,16 @@ public class Tweet {
                 List<Variant> variants = videoInfo.getVariants();
 
                 if(variants != null && variants.size() > 0){
-                    Optional<Variant> variantOptional = variants.stream().filter(x -> x.getContentType() == VIDEO_MP4).findAny();
 
-                    if(variantOptional.isPresent()){
+                    Variant localVariant = null;
+                    for (Variant variant: variants) {
+                        if(variant != null && variant.getContentType() == VIDEO_MP4) {
+                            localVariant = variant;
+                            break;
+                        }
+                    }
+
+                    if(localVariant != null){
                         return extendedEntities.getMediaCollection().get(0).getType();
                     }
                 }
@@ -165,10 +171,16 @@ public class Tweet {
                 List<Variant> variants = videoInfo.getVariants();
 
                 if(variants != null && variants.size() > 0){
-                    Optional<Variant> variantOptional = variants.stream().filter(x -> x.getContentType() == VIDEO_MP4).findAny();
+                    Variant localVariant = null;
+                    for (Variant variant: variants) {
+                        if(variant != null && variant.getContentType() == VIDEO_MP4) {
+                            localVariant = variant;
+                            break;
+                        }
+                    }
 
-                    if(variantOptional.isPresent()){
-                        return variantOptional.get().getUrl();
+                    if(localVariant!=null){
+                        return localVariant.getUrl();
                     }
                 }
             }
@@ -184,10 +196,16 @@ public class Tweet {
                 List<Variant> variants = videoInfo.getVariants();
 
                 if(variants != null && variants.size() > 0){
-                    Optional<Variant> variantOptional = variants.stream().filter(x -> x.getContentType() == VIDEO_MP4).findAny();
+                    Variant localVariant = null;
+                    for (Variant variant: variants) {
+                        if(variant != null && variant.getContentType() == VIDEO_MP4) {
+                            localVariant = variant;
+                            break;
+                        }
+                    }
 
-                    if(variantOptional.isPresent()){
-                        return variantOptional.get().getContentType();
+                    if(localVariant!=null){
+                        return localVariant.getContentType();
                     }
                 }
             }

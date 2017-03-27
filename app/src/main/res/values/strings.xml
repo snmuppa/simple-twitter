@@ -1,8 +1,14 @@
 <resources>
-    <string name="app_name">Twister Twit</string>
+    <string name="app_name">Twister Tweets</string>
     <string name="login_twitter">Log in with Twitter</string>
     <string name="compose">Compose</string>
     <string name="droid_user">Droid User</string>
     <string name="sample_tweet_text">Tweets can ony be 140 characters long...</string>
     <string name="twitter_user">\@droidgeddon</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tweet_compose_hint">Hello! What\'s happening?</string>
+    <string name="tweet">Tweet</string>
+    <string name="max_tweet_length">140</string>
 </resources>

@@ -1,11 +1,13 @@
 package com.fetherz.saim.twistertwit.models.client;
 
+import org.parceler.Parcel;
+
 /**
  * Created by sm032858 on 3/25/17.
  */
 
+@Parcel(analyze={Tweet.class})
 public class User {
-
     public static class UserBuilder {
         private long userId;
         private String userIdString;
@@ -51,6 +53,8 @@ public class User {
     private String screenName;
 
     private String profileImageUrl;
+
+    public User() { }
 
     private User(long userId, String userIdString, String name, String screenName, String profileImageUrl) {
         this.userId = userId;

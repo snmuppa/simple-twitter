@@ -28,7 +28,6 @@ public class User {
     @SerializedName(PROFILE_IMAGE_URL)
     private String profileImageUrl;
 
-
     public long getUserId() {
         return userId;
     }
