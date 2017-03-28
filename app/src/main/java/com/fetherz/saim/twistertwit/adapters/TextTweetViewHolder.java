@@ -1,7 +1,9 @@
 package com.fetherz.saim.twistertwit.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -29,6 +31,7 @@ import static com.loopj.android.http.AsyncHttpClient.LOG_TAG;
 public class TextTweetViewHolder extends RecyclerView.ViewHolder
         implements View.OnClickListener {
 
+    private static final int REQUEST_CODE = 200;
     @BindView(R.id.ivRetweeted)
     ImageView mIvRetweeted;
 
@@ -87,11 +90,13 @@ public class TextTweetViewHolder extends RecyclerView.ViewHolder
         int position = getLayoutPosition();
         Tweet tweet = mTweets.get(position);
 
-        Intent intent = DetailTextActivity.newIntent(mContext);
-
+        Intent intent = new Intent(mContext, DetailTextActivity.class);
         intent.putExtra("tweet", Parcels.wrap(tweet));
+        ((Activity)mContext).startActivityForResult(intent, REQUEST_CODE, new Bundle());
 
-        mContext.startActivity(intent);
+        //Intent intent = DetailTextActivity.newIntent(mContext);
+        //intent.putExtra("tweet", Parcels.wrap(tweet));
+        //mContext.startActivity(intent);
         Log.d(LOG_TAG, "Tweet selected: " + tweet);
     }
 }

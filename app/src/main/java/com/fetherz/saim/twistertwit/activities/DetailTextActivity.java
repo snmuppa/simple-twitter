@@ -234,17 +234,14 @@ public class DetailTextActivity extends AppCompatActivity {
 
                 final Tweet finalTweet = tweet;
 
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Intent intent = new Intent();
-                        intent.putExtra(EXTRA_TWEET, Parcels.wrap(finalTweet));
-                        intent.putExtra("HttpStatusCode", statusCode);
-                        // set result status code and bundle data
-                        setResult(RESULT_OK, intent);
+                runOnUiThread(() -> {
+                    Intent intent = new Intent();
+                    intent.putExtra(EXTRA_TWEET, Parcels.wrap(finalTweet));
+                    intent.putExtra("HttpStatusCode", statusCode);
+                    // set result status code and bundle data
+                    setResult(RESULT_OK, intent);
 
-                        finish(); //closes child activity and passes data to the parent
-                    }
+                    finish(); //closes child activity and passes data to the parent
                 });
             }
         });
